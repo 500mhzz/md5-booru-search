@@ -4,7 +4,7 @@ Searches for posts with the same md5 as the provided e621 post
 
 ## Developing
 
-Once you've clones the project and installed dependencies with `npm install` (or `pnpm install` or `yarn` or `bun install`), start a development server:
+Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn` or `bun install`), start a development server:
 
 ```bash
 npm run dev

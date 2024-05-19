@@ -8,9 +8,9 @@ export const actions = {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let fixedUrl: any = url;
-        let rule34Url = null;
-        let tbibUrl = null;
-        let reqUrl = null;
+        let rule34Url;
+        let tbibUrl;
+        let reqUrl;
 
 
 		if (url?.includes('q=')) {
@@ -54,8 +54,8 @@ export const actions = {
 
         if(!reqUrl) return { error: 'Invalid URL' }
 
-        let parentMD5 = null;
-        let imageUrl = null;
+        let parentMD5;
+        let imageUrl;
 
 		const json = await reqUrl.json();
 
@@ -80,9 +80,9 @@ export const actions = {
             `https://e621.net/posts.json?tmd5:${parentMD5}`
 		];
 
-        let r34 = null;
-        let tbib = null;
-        let e621 = null;
+        let r34;
+        let tbib;
+        let e621;
 
 		if(!url?.includes("rule34.xxx")) {
             r34 = await (await fetch(boorus[0])).json().catch(() => null);
