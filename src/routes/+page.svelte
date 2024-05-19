@@ -10,8 +10,8 @@
     </nav>
 
     <div class="flex items-center justify-center mt-10">
-        {#if form?.r34[0]}
-            <img src={form.r34[0].preview_url} alt="Preview" class="w-64 h-64 object-cover rounded-md shadow-lg mb-10">
+        {#if form?.imageUrl} 
+            <img src={form.imageUrl} alt="Preview" class="w-64 h-64 object-cover rounded-md shadow-lg mb-10">
         {/if}
     </div>
 
