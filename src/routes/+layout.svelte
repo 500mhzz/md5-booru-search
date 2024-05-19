@@ -5,12 +5,11 @@
 
 <div>
 	<nav class="w-full bg-blue-700 p-4 top-0 flex justify-between items-center">
-		<a href="/"><h1 class="text-2xl text-center text-white">MD5 Search</h1></a>
+		<a href="/"><h1 class="text-2xl text-center text-white">MD5 Booru Search</h1></a>
 		<div class="text-sm">
 			<a href="https://github.com/500mhzz/md5-booru-search" class="text-white hover:underline mr-4"
 				>GitHub</a
 			>
-			<a href="https://500mhz.xyz" class="text-white hover:underline">by 500mhz</a>
 		</div>
 	</nav>
 
@@ -20,8 +19,12 @@
 
 	<main 
         class="flex flex-col items-center justify-center px-4"
-        style="min-height: calc(100vh - 12vh);"
+        style="min-height: calc(100vh - 17vh);"
     >
 		<slot />
 	</main>
 </div>
+
+<footer class="bg-blue-700 p-4 text-center text-white">
+        <p>MD5 Search created with 💖 by <a href="https://500mhz.xyz" class="text-sky-300 hover:underline">500mhz</a></p>
+</footer>
