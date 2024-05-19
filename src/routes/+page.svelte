@@ -4,6 +4,10 @@
     export let form: any;
 </script>
 
+<svelte:head>
+    <title>MD5 Booru Search</title> 
+</svelte:head>
+
 <div class="mt-16 w-full px-4 md:px-0 md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
     {#if form?.imageUrl}
         <img
