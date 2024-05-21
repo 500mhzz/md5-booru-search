@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+
 	export let form: any;
 
 	function isImageUrl(url: string) {
@@ -24,7 +26,10 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="http://booru.500mhz.xyz" />
 	<meta property="og:image" content="https://booru.500mhz.xyz/favicon.png" />
-	<meta property="og:description" content="A simple website that helps you find posts across boorus, even if the original post is deleted." />
+	<meta
+		property="og:description"
+		content="A simple website that helps you find posts across boorus, even if the original post is deleted."
+	/>
 	<meta name="theme-color" content="#7D9DD3" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
@@ -33,8 +38,8 @@
 	{#if form?.fixedUrl}
 		<a
 			href={form?.fixedUrl}
-			class="text-black/90 py-2 mb-5 bg-white/90 border rounded-lg hover:bg-white/100 text-center block"
-			>Source URL</a
+			class="text-black/90 py-2 mb-2 bg-white/90 border rounded-lg hover:bg-white/100 text-center block"
+			>Source Post</a
 		>
 	{/if}
 	{#if isImageUrl(form?.imageUrl) && isImageUrl(form?.videoUrl)}
@@ -65,7 +70,28 @@
 </div>
 
 {#if !form}
-	<div class="flex flex-col items-center justify-center mt-10">
+	<button
+		class="flex flex-row items-center justify-center bg-neutral-900/35 border border-white/10 rounded-lg rounded-b-none p-2 w-full md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4 hover:bg-neutral-900/70"
+		on:click={() => (window.location.href = 'https://github.com/500mhzz/md5-booru-search')}
+		role="link"
+	>
+		<div class="flex flex-row w-full">
+			<p
+				class="flex items-center justify-center bg-sky-300 text-black px-3 py-1 rounded-lg rounded-r-none border border-white/10 border-r-0 md:text-base text-sm text-center"
+			>
+				NEW
+			</p>
+			<p
+				class="text-sky-300 uppercase bg-neutral-900/80 px-3 py-1 rounded-lg rounded-l-none border border-white/10 border-l-0 w-full md:text-base text-sm"
+			>
+				Added GelBooru support!
+			</p>
+		</div>
+	</button>
+
+	<div
+		class="flex flex-col items-center justify-center w-full bg-neutral-900/35 border border-white/10 border-t-0 rounded-lg rounded-t-none md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4 p-5"
+	>
 		<h1 class="flex flex-row items-center gap-4 text-3xl text-white text-center">
 			MD5 Booru Search
 		</h1>
@@ -84,7 +110,8 @@
 	<form
 		action="?/search"
 		method="POST"
-		class="flex items-center justify-center mt-10 sm:text-md text-sm"
+		class="flex items-center justify-center mt-5 sm:text-md text-sm"
+		use:enhance
 	>
 		<input
 			type="text"
@@ -158,7 +185,26 @@
 			</div>
 		{/if}
 
-		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621}
+		{#if form?.gelbooru}
+			<div
+				class="flex flex-row bg-neutral-900/35 border border-white/10 p-4 rounded-lg shadow-lg w-full"
+			>
+				<img src="gelbooru-logo.png" alt="Gelbooru Logo" class="w-20 mr-0" />
+
+				<div class="ml-5 w-full">
+					<h2 class="text-xl">Gelbooru</h2>
+					{#each form.gelbooru.post as post}
+						<a
+							href={`https://gelbooru.com/index.php?page=post&s=view&id=` + post.id}
+							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
+							>Go to Gelbooru</a
+						>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621 && !form?.gelbooru}
 			<div class="bg-white/10 text-white/85 text-center backdrop-blur-lg p-3 rounded-lg w-full">
 				No results found.
 			</div>

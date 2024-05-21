@@ -28,7 +28,7 @@
 
 	<main
 		class="flex flex-col items-center justify-center px-4 mt-10"
-		style="min-height: calc(100vh - 9.7vh);"
+		style="min-height: calc(100vh - 9.8vh);"
 	>
 		<slot />
 	</main>
