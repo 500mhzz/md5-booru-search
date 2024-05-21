@@ -57,16 +57,27 @@ export const actions = {
         let parentMD5;
         let imageUrl;
 
+        let videoUrl;
+        let videoPoster;
+
 		const json = await reqUrl.json();
 
 		if(url?.includes("rule34.xxx")) {
             parentMD5 = await json[0].hash;
             imageUrl = await json[0].sample_url;
+            if(!imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+                videoPoster = await json[0].sample_url;
+                videoUrl = await json[0].file_url;
+            }
         }
 
         if(url?.includes("e621.net")) {
             parentMD5 = await json.post.file.md5;
             imageUrl = await json.post.file.url;
+            if(!imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+                videoPoster = await json.post.sample.url;
+                videoUrl = await json.post.file.url;
+            }
         }
 
         if(url?.includes("tbib.org")) {
@@ -80,9 +91,9 @@ export const actions = {
             `https://e621.net/posts.json?tmd5:${parentMD5}`
 		];
 
-        let r34;
-        let tbib;
-        let e621;
+        let r34 = null;
+        let tbib = null;
+        let e621 = null;
 
 		if(!url?.includes("rule34.xxx")) {
             r34 = await (await fetch(boorus[0])).json().catch(() => null);
@@ -101,7 +112,10 @@ export const actions = {
 			tbib,
             e621,
             imageUrl,
-            parentMD5
+            parentMD5,
+            videoPoster,
+            videoUrl,
+            fixedUrl: fixedUrl.toString()
 		};
 	}
 };

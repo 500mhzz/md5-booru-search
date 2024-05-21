@@ -1,25 +1,65 @@
 <script lang="ts">
-	import type { ActionData } from './$types';
-
 	export let form: any;
+
+	function isImageUrl(url: string) {
+		const imageFileExtensions = ['jpeg', 'jpg', 'gif', 'png', 'svg', 'webp'];
+
+		// Remove query parameters
+		try {
+			url = url.split('?')[0];
+		} catch (e) {
+			if (!form?.imageUrl) return false;
+			return true;
+		}
+
+		const urlExtension = url?.split('.')?.pop()?.toLowerCase();
+		return imageFileExtensions.includes(urlExtension!);
+	}
 </script>
 
 <svelte:head>
 	<title>MD5 Booru Search</title>
+
+	<meta property="og:title" content="MD5 Booru Search | 500Mhz.xyz" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://booru.500mhz.xyz" />
+	<meta property="og:image" content="https://booru.500mhz.xyz/favicon.png" />
+	<meta property="og:description" content="A simple website that helps you find posts across boorus, even if the original post is deleted." />
+	<meta name="theme-color" content="#7D9DD3" />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div class="mt-16 w-full px-4 md:px-0 md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-	{#if form?.imageUrl}
+	{#if form?.fixedUrl}
+		<a
+			href={form?.fixedUrl}
+			class="text-black/90 py-2 mb-5 bg-white/90 border rounded-lg hover:bg-white/100 text-center block"
+			>Source URL</a
+		>
+	{/if}
+	{#if isImageUrl(form?.imageUrl) && isImageUrl(form?.videoUrl)}
 		<img
-			src={form.imageUrl}
+			src={form?.imageUrl}
 			alt="Preview"
 			class="w-full h-auto object-cover rounded-lg border border-white/10 shadow-lg mb-3"
 		/>
 		<p
-			class="text-center text-sm bg-neutral-900/35 rounded-lg px-5 py-3 border border-white/10 sm:text-md"
+			class="bg-neutral-900/35 p-2 text-sm sm:text-md border border-white/10 w-full rounded-lg text-center"
 		>
-			<span class="text-white/60">MD5:</span>
-			{form.parentMD5}
+			<span class="text-white/80">MD5:</span>
+			{form?.parentMD5}
+		</p>
+	{:else if form?.videoUrl}
+		<video controls class="w-full rounded-lg border border-white/10 shadow-lg mb-3">
+			<track kind="captions" />
+			<source src={form?.videoUrl} type="video/mp4" />
+			Your browser does not support the video tag.
+		</video>
+		<p
+			class="bg-neutral-900/35 p-2 text-sm sm:text-md border border-white/10 w-full rounded-lg text-center"
+		>
+			<span class="text-white/80">MD5:</span>
+			{form?.parentMD5}
 		</p>
 	{/if}
 </div>
@@ -29,7 +69,7 @@
 		<h1 class="flex flex-row items-center gap-4 text-3xl text-white text-center">
 			MD5 Booru Search
 		</h1>
-		<p class="text-white/60 text-center mt-3 text-center">
+		<p class="text-white/60 text-center mt-3">
 			Search for images on Rule34, TBIB, and E621 using the MD5 hash of the image.
 		</p>
 	</div>
@@ -96,7 +136,7 @@
 			</div>
 		{/if}
 
-		{#if form?.e621}
+		{#if form?.e621 && form.e621.posts.length > 0}
 			<div
 				class="flex flex-row bg-neutral-900/35 border border-white/10 p-4 rounded-lg shadow-lg w-full"
 			>
@@ -110,8 +150,17 @@
 							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
 							>Go to E621</a
 						>
+						{#if !post.id}
+							<p class="text-white/60 text-center mt-2">Couldn't fetch post id.</p>
+						{/if}
 					{/each}
 				</div>
+			</div>
+		{/if}
+
+		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621}
+			<div class="bg-white/10 text-white/85 text-center backdrop-blur-lg p-3 rounded-lg w-full">
+				No results found.
 			</div>
 		{/if}
 	</div>
