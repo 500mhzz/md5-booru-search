@@ -72,7 +72,7 @@
 {#if !form}
 	<button
 		class="flex flex-row items-center justify-center bg-neutral-900/35 border border-white/10 rounded-lg rounded-b-none p-2 w-full md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4 hover:bg-neutral-900/70"
-		on:click={() => (window.location.href = 'https://github.com/500mhzz/md5-booru-search')}
+		on:click={() => (window.location.href = 'https://github.com/500mhzz/md5-booru-search/commit/0daa40b623c134c7d8cb7a34db29a54a2eeb2d33')}
 		role="link"
 	>
 		<div class="flex flex-row w-full">

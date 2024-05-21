@@ -159,8 +159,6 @@ export const actions = {
 			}
 		}
 
-		console.log(gelbooru)
-
 		return {
 			r34,
 			tbib,
