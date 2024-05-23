@@ -18,7 +18,6 @@
 		return imageFileExtensions.includes(urlExtension!);
 	}
 
-	console.log(form?.imageURl)
 </script>
 
 <svelte:head>
@@ -68,7 +67,7 @@
 			<span class="text-white/80">MD5:</span>
 			{form?.parentMD5}
 		</p>
-		{:else if form?.parentMD5 && form?.imageUrl == undefined}
+		{:else if form?.parentMD5 && !form?.imageUrl}
 		<img
 			src="https://placehold.co/500x500?text=Image Not Found"
 			alt="Preview"
@@ -125,7 +124,6 @@
 		action="?/search"
 		method="POST"
 		class="flex items-center justify-center mt-5 sm:text-md text-sm"
-		use:enhance
 	>
 		<input
 			type="text"
@@ -147,7 +145,7 @@
 
 				<div class="ml-5 w-full">
 					<h2 class="text-xl">Rule34</h2>
-					{#each form.r34 as post}
+					{#each form.r34 || [] as post}
 						<a
 							href={`https://rule34.xxx/index.php?page=post&s=view&id=` + post.id}
 							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
@@ -166,7 +164,7 @@
 
 				<div class="ml-5 w-full">
 					<h2 class="text-xl">TBIB (The Big ImageBoard)</h2>
-					{#each form.tbib as post}
+					{#each form?.tbib || [] as post}
 						<a
 							href={`https://tbib.org/index.php?page=post&s=view&id=` + post.id}
 							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
@@ -185,7 +183,7 @@
 
 				<div class="ml-5 w-full">
 					<h2 class="text-xl">E621</h2>
-					{#each form.e621.posts as post}
+					{#each form?.e621?.posts || [] as post}
 						<a
 							href={`https://e621.net/posts/` + post.id}
 							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
@@ -199,7 +197,7 @@
 			</div>
 		{/if}
 
-		{#if form?.gelbooru}
+		{#if form?.gelbooru && form?.gelbooru?.post}
 			<div
 				class="flex flex-row bg-neutral-900/35 border border-white/10 p-4 rounded-lg shadow-lg w-full"
 			>
@@ -207,7 +205,7 @@
 
 				<div class="ml-5 w-full">
 					<h2 class="text-xl">Gelbooru</h2>
-					{#each form.gelbooru.post as post}
+					{#each form?.gelbooru?.post || [] as post}
 						<a
 							href={`https://gelbooru.com/index.php?page=post&s=view&id=` + post.id}
 							class="text-black bg-white/90 rounded-lg p-2 mt-2 hover:bg-white/100 block ml-0 text-center w-full"
@@ -218,7 +216,7 @@
 			</div>
 		{/if}
 
-		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621 && !form?.gelbooru}
+		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621 || !form?.e621?.posts && !form?.gelbooru || !form?.gelbooru?.post}
 			<div class="bg-white/10 text-white/85 text-center backdrop-blur-lg p-3 rounded-lg w-full">
 				No results found.
 			</div>

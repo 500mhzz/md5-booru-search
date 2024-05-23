@@ -134,6 +134,7 @@ export const actions = {
 		if (!url?.includes('tbib.org')) {
 			tbib = await (await fetch(boorus[1])).json().catch(() => null);
 
+
 			try {
 				if (tbib) {
 					if (!imageUrl)
@@ -142,7 +143,7 @@ export const actions = {
 						videoUrl = `https://tbib.org/images/${await tbib[0]?.directory}/${await tbib[0]?.image}?${await tbib[0]?.id}`;
 				}
 			} catch (e) {
-				null;
+				tbib = null;
 			}
 		}
 
@@ -155,7 +156,7 @@ export const actions = {
 					if (!videoUrl) videoUrl = await e621.post.file.url;
 				}
 			} catch (e) {
-				null;
+				e621 = null;
 			}
 		}
 
@@ -167,9 +168,12 @@ export const actions = {
 					if (!videoUrl) videoUrl = await gelbooru.post[0]?.file_url;
 				}
 			} catch (e) {
-				null;
+				gelbooru = null;
 			}
 		}
+
+		if(!videoUrl) videoUrl = null;
+		if(!imageUrl) imageUrl = null;
 
 		return {
 			r34,
