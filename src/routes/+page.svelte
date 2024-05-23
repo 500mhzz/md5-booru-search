@@ -17,6 +17,8 @@
 		const urlExtension = url?.split('.')?.pop()?.toLowerCase();
 		return imageFileExtensions.includes(urlExtension!);
 	}
+
+	console.log(form?.imageURl)
 </script>
 
 <svelte:head>
@@ -60,6 +62,18 @@
 			<source src={form?.videoUrl} type="video/mp4" />
 			Your browser does not support the video tag.
 		</video>
+		<p
+			class="bg-neutral-900/35 p-2 text-sm sm:text-md border border-white/10 w-full rounded-lg text-center"
+		>
+			<span class="text-white/80">MD5:</span>
+			{form?.parentMD5}
+		</p>
+		{:else if form?.parentMD5 && form?.imageUrl == undefined}
+		<img
+			src="https://placehold.co/500x500?text=Image Not Found"
+			alt="Preview"
+			class="w-full h-auto object-cover rounded-lg border border-white/10 shadow-lg mb-3"
+		/>
 		<p
 			class="bg-neutral-900/35 p-2 text-sm sm:text-md border border-white/10 w-full rounded-lg text-center"
 		>

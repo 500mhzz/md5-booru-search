@@ -57,17 +57,20 @@ export const actions = {
 			});
 		}
 
-		if(url?.includes('gelbooru.com')) {
+		if (url?.includes('gelbooru.com')) {
 			gelbooruUrl = new URL(`${url}`);
 			const id = gelbooruUrl.searchParams.get('id');
-			if(!id) return { error: 'Invalid URL' };
+			if (!id) return { error: 'Invalid URL' };
 
-			reqUrl = await fetch(`https://gelbooru.com/index.php?page=dapi&s=post&id=${id}&json=1&q=index&api_key=${GELBOORU_API_KEY}&user_id=${GELBOORU_USER_ID}`, {
-				headers: {
-					'User-Agent':
-						'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+			reqUrl = await fetch(
+				`https://gelbooru.com/index.php?page=dapi&s=post&id=${id}&json=1&q=index&api_key=${GELBOORU_API_KEY}&user_id=${GELBOORU_USER_ID}`,
+				{
+					headers: {
+						'User-Agent':
+							'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+					}
 				}
-			});
+			);
 		}
 
 		if (!reqUrl) return { error: 'Invalid URL' };
@@ -100,7 +103,7 @@ export const actions = {
 			imageUrl = `https://tbib.org/images/${await json[0].directory}/${await json[0].image}?${await json[0].id}`;
 		}
 
-		if(url?.includes('gelbooru.com')) {
+		if (url?.includes('gelbooru.com')) {
 			parentMD5 = await json.post[0].md5;
 			imageUrl = await json.post[0].file_url;
 			if (imageUrl && !imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
@@ -118,7 +121,7 @@ export const actions = {
 		let r34 = null;
 		let tbib = null;
 		let e621 = null;
-		let gelbooru = null
+		let gelbooru = null;
 
 		if (!url?.includes('rule34.xxx')) {
 			r34 = await (await fetch(boorus[0])).json().catch(() => null);
@@ -130,32 +133,41 @@ export const actions = {
 
 		if (!url?.includes('tbib.org')) {
 			tbib = await (await fetch(boorus[1])).json().catch(() => null);
-			if (tbib) {
-				if (!imageUrl)
-					imageUrl = `https://tbib.org/images/${await tbib[0]?.directory}/${await tbib[0]?.image}?${await tbib[0]?.id}`;
-				if (!videoUrl)
-					videoUrl = `https://tbib.org/images/${await tbib[0]?.directory}/${await tbib[0]?.image}?${await tbib[0]?.id}`;
+
+			try {
+				if (tbib) {
+					if (!imageUrl)
+						imageUrl = `https://tbib.org/images/${await tbib[0]?.directory}/${await tbib[0]?.image}?${await tbib[0]?.id}`;
+					if (!videoUrl)
+						videoUrl = `https://tbib.org/images/${await tbib[0]?.directory}/${await tbib[0]?.image}?${await tbib[0]?.id}`;
+				}
+			} catch (e) {
+				null;
 			}
 		}
 
 		if (!url?.includes('e621.net')) {
-			e621 = await e621MD5Post(`500mhz`, E621_API_KEY, parentMD5).catch(() => null)
+			e621 = await e621MD5Post(`500mhz`, E621_API_KEY, parentMD5).catch(() => null);
 
 			try {
 				if (e621) {
 					if (!imageUrl) imageUrl = await e621.post.file.url;
 					if (!videoUrl) videoUrl = await e621.post.file.url;
 				}
-			} catch(e) {
-				null
+			} catch (e) {
+				null;
 			}
 		}
 
 		if (!url?.includes('gelbooru.com')) {
 			gelbooru = await (await fetch(boorus[3])).json().catch(() => null);
-			if (gelbooru) {
-				if (!imageUrl) imageUrl = await gelbooru.post[0]?.file_url;
-				if (!videoUrl) videoUrl = await gelbooru.post[0]?.file_url;
+			try {
+				if (gelbooru) {
+					if (!imageUrl) imageUrl = await gelbooru.post[0]?.file_url;
+					if (!videoUrl) videoUrl = await gelbooru.post[0]?.file_url;
+				}
+			} catch (e) {
+				null;
 			}
 		}
 
