@@ -17,7 +17,6 @@
 		const urlExtension = url?.split('.')?.pop()?.toLowerCase();
 		return imageFileExtensions.includes(urlExtension!);
 	}
-
 </script>
 
 <svelte:head>
@@ -67,7 +66,7 @@
 			<span class="text-white/80">MD5:</span>
 			{form?.parentMD5}
 		</p>
-		{:else if form?.parentMD5 && !form?.imageUrl}
+	{:else if form?.parentMD5 && !form?.imageUrl}
 		<img
 			src="https://placehold.co/500x500?text=Image Not Found"
 			alt="Preview"
@@ -85,7 +84,9 @@
 {#if !form}
 	<button
 		class="flex flex-row items-center justify-center bg-neutral-900/35 border border-white/10 rounded-lg rounded-b-none p-2 w-full md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4 hover:bg-neutral-900/70"
-		on:click={() => (window.location.href = 'https://github.com/500mhzz/md5-booru-search/commit/0daa40b623c134c7d8cb7a34db29a54a2eeb2d33')}
+		on:click={() =>
+			(window.location.href =
+				'https://github.com/500mhzz/md5-booru-search/commit/0daa40b623c134c7d8cb7a34db29a54a2eeb2d33')}
 		role="link"
 	>
 		<div class="flex flex-row w-full">
@@ -216,7 +217,7 @@
 			</div>
 		{/if}
 
-		{#if form?.imageUrl && !form?.r34 && !form?.tbib && !form?.e621 || !form?.e621?.posts && !form?.gelbooru || !form?.gelbooru?.post}
+		{#if form?.fixedUrl && !form?.r34 && !form?.tbib && !form?.e621 && !form?.e621?.posts && !form?.gelbooru && !form?.gelbooru?.post}
 			<div class="bg-white/10 text-white/85 text-center backdrop-blur-lg p-3 rounded-lg w-full">
 				No results found.
 			</div>
