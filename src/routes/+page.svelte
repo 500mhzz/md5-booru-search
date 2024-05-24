@@ -17,6 +17,7 @@
 		const urlExtension = url?.split('.')?.pop()?.toLowerCase();
 		return imageFileExtensions.includes(urlExtension!);
 	}
+
 </script>
 
 <svelte:head>
