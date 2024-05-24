@@ -28,16 +28,19 @@
 
 	<main
 		class="flex flex-col items-center justify-center px-4 mt-10"
-		style="min-height: calc(100vh - 9.8vh);"
+		style="min-height: calc(100vh - 12.2vh);"
 	>
 		<slot />
 	</main>
 </div>
 
-<footer class="bg-neutral-900/10 p-4 text-center text-white border-t border-white/10">
+<footer class="flex flex-col items-center justify-center bg-neutral-900/10 p-4 text-center text-white border-t border-white/10">
 	<p>
-		MD5 Search created with 💖 by <a href="https://500mhz.xyz" class="text-sky-300 hover:underline"
+		MD5 Booru Search created with 💖 by <a href="https://500mhz.xyz" class="text-sky-300 hover:underline"
 			>500mhz</a
 		>
+	</p>
+	<p>
+		<a href="/terms-of-service" class="text-sky-300 hover:underline">Terms of Service</a>
 	</p>
 </footer>
