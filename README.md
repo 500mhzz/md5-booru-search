@@ -2,7 +2,11 @@
 
 Searches for posts with the same md5 as the provided e621 post
 
-## Developing
+# Features
+- Gelbooru, Rule34, e621, etc... Search using MD5 or the post link.
+- Sleek user friendly UI
+
+## Running (Development)
 
 Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn` or `bun install`), start a development server:
 
