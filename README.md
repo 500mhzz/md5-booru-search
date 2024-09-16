@@ -1,6 +1,6 @@
 # MD5 Booru Search
 
-Searches for posts with the same md5 as the provided e621 post
+Searches posts using several boorus using the MD5 Hash, finding deleted posts if you still have the image! 
 
 ## Features
 - Gelbooru, Rule34, e621, etc... Search using MD5 or the post link.
